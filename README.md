@@ -26,8 +26,8 @@ This proposal is to provide an optional mechanism where nodes may load a list of
 
 # Proposal
 
-## Change Withdrawal Address Grace Period
-Beacon node clients optionally implement a "change withdrawal address rebroadcast delay" that creates an optional delay in rebroadcasting change withdrawal addresses (suggested to default to 2000 seconds (>5 epochs), or allowing setting to 0 for instructing client to only rebroadcast requests matching the below Change Withdrawal Address Broadcast list) for change withdrawal address requests to allow peer replication of client accepted valid requests, and collecting multiple valid change withdrawal address requests per withdrawal credentials before finalizing the change withdrawal address request. This can prevent a "first to arrive" critical race condition for conflicting change withdraw address. 
+## Change Withdrawal Address Rebroadcast Delay
+Beacon node clients optionally implement a "change withdrawal address rebroadcast delay" that creates an optional delay in rebroadcasting change withdrawal addresses (suggested to default to 2000 seconds (>5 epochs), set to 0 seconds for no delay, or set to -1 to only rebroadcast requests matching a Change Withdrawal Address Broadcast signature or Change Withdrawal Address Acceptance list). This setting will allow change withdrawal address requests time to peer replication of client accepted valid requests before finalizing the change withdrawal address request. This can prevent a "first to arrive" critical race condition for conflicting change withdraw address. 
 
 ## Change Withdrawal Address Broadcast
 Support a "Withdrawal Change Address Broadcast" file of lines specifying "validator index,current withdrawal public key,proposed execution layer withdrawal address,consensus layer signature" which will instruct nodes to automatically submit a one time change withdrawal address broadcast message for each valid line. 
