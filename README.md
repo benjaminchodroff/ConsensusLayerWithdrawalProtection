@@ -88,10 +88,27 @@ User B: Controls the CL keys/mnemonic and the EL key used for the deposit, and s
 
 This is a contested claim and as such there is no way to prove who is in control using on chain data. Instead, either user may try to persuade the community they are the rightful owner (identity verification, social media, etc.) in an attempt to get node operators to load their contested claim into their "Change Withdrawal Address Broadcast" file. However, there is no way to fully prove it. 
 
-## 4: A user has lost their CL keys
+## 4: A user has lost either their CL key and/or mnemonic (no withdrawal key)
 User A: Lacks the CL keys and mnemonic
 
-There is no way to recover this scenario with this proposal as we cannot prove a user has lost their keys.
+There is no way to recover this scenario with this proposal as we cannot prove a user has lost their keys, and the mnemonic is required to generate the withdrawal key. 
+
+## 5: End game - attacker
+User A: Controls EL and CL key/mnemonic, buccessfully achieves a change address withdrawal
+User B: Controls CL key, Decides to attack
+
+Upon noticing User A has submitted a successful change address withdrawal, User B may run a validator and attempt to get User A slashed
+
+## 6: Compromised key, but not vulnerable to withdrawal
+User A: Controls EL and CL key/mnemonic, but has a vulnerability which leaks their CL key but NOT their CL mnemonic
+User B: Controls the CL key, but lacks the CL mnemonic
+
+User A may generate the withdrawal key (requires the mnemonic). User B can attack User A by getting them slashed, but will be unable to generate the withdrawal key. 
+
+### Second Order Effects
+1. A user who participates in the "Change Withdrawal Address Broadcast" may cause the attacker to give up early and instead start to slash. For some users, the thought of getting slashed is preferrable to giving an adversary any funds.
+2. The attacker may set up their own unverified list of their own Change Withdrawal Address Acceptance file to break ties in their favor. 
+3. The attacker may set up their own Change Withdrawal Address Broadcast to reject signatures not matching their attack. 
 
 # Documentation 
 ## Change Withdrawal Address Acceptance File
