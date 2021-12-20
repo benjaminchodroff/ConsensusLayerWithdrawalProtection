@@ -71,37 +71,37 @@ Because of the above, even if fully implemented, it will be down to chance as to
 
 ## Scenarios
 ### 1: Attacker lacks EL deposit key, uncontested claim
-User A: Controls the CL keys and the EL key used for the deposit
-User B: Controls the CL keys, but does not control the EL key for the deposit
+- User A: Controls the CL keys and the EL key used for the deposit
+- User B: Controls the CL keys, but does not control the EL key for the deposit
 
 UserA signs and submits a claim to the CLWP repository, clients load UserA message into the "Change Withdrawal Address Broadcast" file. At the time of the first epoch support Change Withdrawal Address, many (not all) nodes begin to broadcast the message. UserB also tries to submit a different but valid Change Withdrawal Address to an address that does not match the signature in the claim. This message is successuflly received via REST API, but some (not all) nodes begin to silently drop this message as the signature does not match the signature in the "Change Withdrawal Address Broadcast" file. As such, these nodes do not replicate this message via P2P. The nodes which do not have a Change Withdrawal Address Broadcast file loaded may still impose a "Change Withdrawal Address Rebroadcast Delay" to keep listening (for about 5 epochs) to see if there are any conflicts to this mesage. This delay may give UserA a significant advantage in beating User B, but there is no certainty as it will depend on chance which validator and nodes are involved. 
 
 ## 2: Atacker has both EL deposit key and CL keys, uncontested claim
-User A: Controls the CL key/mnemonic and the EL key used for the deposit, and submits a claim to move to a new address
-User B: Controls the CL and EL key/mnemonic used for the EL deposit, but fails to submit a claim
+- User A: Controls the CL key/mnemonic and the EL key used for the deposit, and submits a claim to move to a new address
+- User B: Controls the CL and EL key/mnemonic used for the EL deposit, but fails to submit a claim
 
 It is possible/likely that User A would notice that all their funds in the EL deposit address had been stolen. This may signal that their CL key is compromised as well, so they decide to pick a new address for the the withdrawal. The story will play out the same as Scenario 1 as the claim is uncontested. 
 
 ## 3: Same as #2, but the attacker submits a contested claim
-User A: Controls the CL keys/mnemonic and the EL key used for the deposit, and submits a claim to move to a new address
-User B: Controls the CL keys/mnemonic and the EL key used for the deposit, and submits a claim to move to a new address
+- User A: Controls the CL keys/mnemonic and the EL key used for the deposit, and submits a claim to move to a new address
+- User B: Controls the CL keys/mnemonic and the EL key used for the deposit, and submits a claim to move to a new address
 
 This is a contested claim and as such there is no way to prove who is in control using on chain data. Instead, either user may try to persuade the community they are the rightful owner (identity verification, social media, etc.) in an attempt to get node operators to load their contested claim into their "Change Withdrawal Address Broadcast" file. However, there is no way to fully prove it. 
 
 ## 4: A user has lost either their CL key and/or mnemonic (no withdrawal key)
-User A: Lacks the CL keys and mnemonic
+- User A: Lacks the CL keys and mnemonic
 
 There is no way to recover this scenario with this proposal as we cannot prove a user has lost their keys, and the mnemonic is required to generate the withdrawal key. 
 
 ## 5: End game - attacker
-User A: Controls EL and CL key/mnemonic, buccessfully achieves a change address withdrawal
-User B: Controls CL key, Decides to attack
+- User A: Controls EL and CL key/mnemonic, buccessfully achieves a change address withdrawal
+- User B: Controls CL key, Decides to attack
 
 Upon noticing User A has submitted a successful change address withdrawal, User B may run a validator and attempt to get User A slashed
 
 ## 6: Compromised key, but not vulnerable to withdrawal
-User A: Controls EL and CL key/mnemonic, but has a vulnerability which leaks their CL key but NOT their CL mnemonic
-User B: Controls the CL key, but lacks the CL mnemonic
+- User A: Controls EL and CL key/mnemonic, but has a vulnerability which leaks their CL key but NOT their CL mnemonic
+- User B: Controls the CL key, but lacks the CL mnemonic
 
 User A may generate the withdrawal key (requires the mnemonic). User B can attack User A by getting them slashed, but will be unable to generate the withdrawal key. 
 
