@@ -2,7 +2,7 @@
 
 ConsensusLayerWithdrawalProtection
 
-Ethereum Consensus Layer Withdrawal Protection provides an additional verification to validators
+Ethereum Consensus Layer Withdrawal Protection (CLWP) proposal provides additional security in the change withdrawal address operation to an execution layer address when a consensus layer mnemonic may be compromised, without changing consensus
 
 # Consensus Layer Withdrawal Protection
 First proposed by [Jim McDonald](https://ethresear.ch/u/jgm/summary), with contributions from [Pietje Puk](https://ethresear.ch/u/pietjepuk/summary), [Benjamin Chodroff](https://ethresear.ch/u/benjaminchodroff/summary) 
@@ -20,11 +20,11 @@ The consensus layer change withdrawal credentials proposal is secure for a singl
 
 In a situation where multiple users have access to the consensus layer withdrawal private key, it is impossible for the network to differentiate the “legitimate” holder of the key from the “illegitimate”. However, there are signals that could be considered in a wider sense. The most verifiable one is that the legitimate holder was also in control of the execution layer deposit address, in which case the suggestion is to require the proposed withdrawal address to be verified by the execution layer deposit address. Setting a withdrawal address to an execution layer address was not supported by the eth2.0-deposit-cli until v1.1.1 on March 23, 2021, leaving some early adopters wishing they could force change their execution layer address earlier. Forcing this change is not something that can be enforced in-protocol, partly due to lack of information on the beacon chain about the execution layer deposit address and partly due to the fact that this was never listed as a requirement. It is also possible that execution layer deposit addresses is no longer under the control of the legitimate holder of the withdrawal private key. 
 
-However, it is possible for individual nodes to locally restrict the changes they wish to include in blocks they propose, and which they propagate around the network, in way that does not change consensus. It is also possible for client nodes to help broadcast signed change withdrawal address requests to ensure as many nodes witness this change as soon as possible in a fair manner. Further, such change withdrawal address signed messages can be preloaded into clients in advance to further help nodes filter attacking requests. 
+However, it is possible for individual nodes to locally restrict the changes they wish to include in blocks they propose, and which they propagate around the network, in way that does not change consensus. It is also possible for client nodes to help broadcast signed change withdrawal address requests to ensure as many nodes witness this change as soon as possible in a fair manner. Further, such change withdrawal address signed messages can be preloaded into clients in advance to further help nodes filter attacking requests.
 
-This proposal describes three optional mechanisms where a client software may implement, and end user can adopt:
+This proposal describes three optional mechanisms where a client software may optionally implement, and end users may option adopt:
 1. A Change Withdrawal Address Rebroadcast Delay, which instructs clients to delay rebroadcasting change withdrawal messages when they do not match a provided signature, or the original deposit address
-2. A list of accepted change withdrawal address messages to broadcast once the network supports the operation, and immediately rebroadcast if received, and drop/not share if mismatching
+2. A list of accepted change withdrawal address signed messages to broadcast once the network supports the operation, and immediately rebroadcast if received, and drop/not share if mismatching
 3. A list of withdrawal credentials and deposit address verifiable against the execution layer to act as a tiebreaker in the event of receiving conflicting messages (deposit address should be accepted without delay, whereas new addresses should have a rebroadcast delay)
 
 This proposal provides optional additional protection. It aims to request nodes set a priority on withdrawal credential claims that favor a verifiable execution layer deposit address in the event of two conflicting change withdrawal credentials. It also establishes a list of change withdrawal address signed messages to help broadcast "as soon as possible" when the network supports it, and encourage client teams to help use these lists to honor filter and prioritize accepting requests by REST and transmitting them via P2P. This will not change consensus, but may help prevent propagating an attack where a withdrawal key has been knowingly or unknowingly been compromised. 
@@ -32,7 +32,7 @@ This proposal provides optional additional protection. It aims to request nodes 
 # Proposal
 
 ## Change Withdrawal Address Rebroadcast Delay
-Beacon node clients optionally implement a "change withdrawal address rebroadcast delay" that creates an optional delay in rebroadcasting change withdrawal addresses (suggested to default to 2000 seconds (>5 epochs), set to 0 seconds for no delay, or set to -1 to only rebroadcast requests matching a Change Withdrawal Address Broadcast signature or Change Withdrawal Address Acceptance list). This setting will allow change withdrawal address requests time for peer replication of client accepted valid requests that are preferred by the community. This can prevent a "first to arrive" critical race condition for a conflicting change withdraw address. 
+Beacon node clients optionally implement a "change withdrawal address rebroadcast delay" that creates an optional delay in rebroadcasting change withdrawal addresses (suggested to default to 2000 seconds (>5 epochs), or set to 0 seconds for no delay, or set to -1 to strictly rebroadcast requests matching a Change Withdrawal Address Broadcast signature or Change Withdrawal Address Acceptance list). This setting will allow change withdrawal address requests time for peer replication of client accepted valid requests that are preferred by the community. This can prevent a "first to arrive" critical race condition for a conflicting change withdraw address. 
 
 ## Change Withdrawal Address Broadcast
 Support a file of lines specifying "validator index,current withdrawal public key,proposed execution layer withdrawal address,consensus layer signature" which will instruct nodes to automatically submit a one time change withdrawal address broadcast message for each valid line. This file will give all node operators an opportunity to ensure their valid change withdrawal address messages are broadcast and heard by nodes during the first epoch supporting the change withdrawal address operation. It will also instruct nodes to perpetually prefer accepting and repeating signatures matching the signature in the file, and reject accepting or rebroadcasting messages which do not match a signature for a given withdrawal credential. 
@@ -105,9 +105,19 @@ Upon noticing User A has submitted a successful change address withdrawal, User 
 
 User A may generate the withdrawal key (requires the mnemonic). User B can attack User A by getting them slashed, but will be unable to generate the withdrawal key. 
 
+## 7: Attacker loads a malicious Change Withdrawal Address Broadcast and Change Withdrawal Address Acceptance files into one or multiple nodes, User A submits claim
+- User A: Submits a valid uncontested claim which is broadcast out as soon as possible by many nodes
+- User B: Submits no claim, but broadcsts a valid malicious claim out through their Change Withdrawal Address Broadcast list, and blocks User A's claim from their node.
+
+User B's claim will make it into many nodes, but when it hits nodes that have adopted User A's signature they will be dropped and not rebroadcast. Statistically, User B will have a harder time achieving consensus among the entire community, but it will be down to chance. 
+
+## 8: Same as #7, but User A submits no claim
+
+The attacker will statistically likely win as they will be first to have their message broadcast to many nodes and, unless User A submits a request exactly at the time of support, it is unlikely to be heard by enough nodes to gain consensus. All users are encouraged to submit claims for this reason because nobody can be certain their mnemonic has not been compromised until it is too late. 
+
 ### Second Order Effects
-1. A user who participates in the "Change Withdrawal Address Broadcast" may cause the attacker to give up early and instead start to slash. For some users, the thought of getting slashed is preferrable to giving an adversary any funds.
-2. The attacker may set up their own unverified list of their own Change Withdrawal Address Acceptance file to break ties in their favor. 
+1. A user who participates in the "Change Withdrawal Address Broadcast" may cause the attacker to "give up" early and instead start to slash. For some users, the thought of getting slashed is preferrable to giving an adversary any funds.
+2. The attacker may set up their own unverified list of their own Change Withdrawal Address Acceptance file and nodes adopting this list to break ties in their favor. 
 3. The attacker may set up their own Change Withdrawal Address Broadcast to reject signatures not matching their attack. 
 
 # Documentation 
@@ -166,4 +176,19 @@ Anyone in the community will be able to generate the following verifiable files 
 	A. UncontestedVerified - Community collected list of all verifiable uncontested change withdrawal address final requests (no conflicting withdrawal credentials allowed from different GitHub users)
 	B. ContestedVerified - Community collected list of all contested verifiable change withdrawal address requests (will contain only verifiable but conflicting withdrawal credentials from different GitHub users)
 
-A claim will be considered contested if a claim arrives where the verifiable consensus layer signatures differ between two or more GitHub submissions, where neither party can prove ownership of the execution layer deposit address. If a contested but verified "Change Withdrawal Address Broadcast" request arrives to the GitHub community, all parties will be notified via GitHub, forced into the ContestedVerified list, and may try to convince the wider community be providing any off chain evidence supporting their claim to then include their claim in nodes.All node operators are encouraged to load the UncontestedVerified signatures file as enabled, and optionally append only ContestedVerified signatures that they have been convinced are the rightful owner in a manner to further strengthen the community. 
+A claim will be considered contested if a claim arrives where the verifiable consensus layer signatures differ between two or more GitHub submissions, where neither party has proven ownership of the execution layer deposit address. If a contested but verified "Change Withdrawal Address Broadcast" request arrives to the GitHub community, all parties will be notified via GitHub, forced into the ContestedVerified list, and may try to convince the wider community be providing any off chain evidence supporting their claim to then include their claim in nodes.All node operators are encouraged to load the UncontestedVerified signatures file as enabled, and optionally append only ContestedVerified signatures that they have been convinced are the rightful owner in a manner to further strengthen the community. 
+
+The uncontested lists will be of the format:
+
+UncontestedVerified-datetime.txt:
+```
+validator_index,current_withdrawal_public_key,proposed_withdrawal_address,consensus_layer_withdrawal_signature
+```
+
+The contested list will be of the format:
+
+ContestedVerified-datetime.txt
+```
+validator_index,current_withdrawal_public_key,proposed_withdrawal_address,consensus_layer_withdrawal_signature,email
+```
+
