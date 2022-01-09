@@ -1,25 +1,34 @@
-# ConsensusLayerWithdrawalProtection
+---
+eip: <to be assigned>
+title: Consensus Layer Withdrawal Protection
+description: Provides additional security in the "change withdrawal address" operation when a consensus layer mnemonic may be compromised, without changing consensus
+author: Benjamin Chodroff (@benjaminchodroff), Jim McDonald (@mcdee)
+discussions-to: <URL>
+status: Draft
+type: Standards Track
+category (*only required for Standards Track): Interface
+created: 2022-01-09
+requires (*optional): <EIP number(s)>
+---
 
-ConsensusLayerWithdrawalProtection
+This is the suggested template for new EIPs.
 
-Ethereum Consensus Layer Withdrawal Protection (CLWP) proposal provides additional security in the "change withdrawal address" operation to an execution layer address when a consensus layer mnemonic may be compromised, without changing consensus
+Note that an EIP number will be assigned by an editor. When opening a pull request to submit your EIP, please use an abbreviated title in the filename, `eip-draft_title_abbrev.md`.
 
-# Consensus Layer Withdrawal Protection
-First proposed by [Jim McDonald](https://ethresear.ch/u/jgm/summary), with contributions from [Pietje Puk](https://ethresear.ch/u/pietjepuk/summary), [Benjamin Chodroff](https://ethresear.ch/u/benjaminchodroff/summary) 
+The title should be 44 characters or less. It should not repeat the EIP number in title, irrespective of the category. 
 
-Thanks to the [Ethereum Research](https://ethresear.ch/) team, [ETHStaker](https://ethstaker.cc/) solo staking community, and the hackers who encourage us to make Ethereum even better
+## Abstract
+The consensus layer change withdrawal credentials proposal is secure for a single user who has certainty their keys and mnemonic have not been compromised. However, as withdrawals on the consensus layer are not yet possible, no user can have absolute certainty that their keys are not compromised until the change withdrawal address is on chain, and by then too late to change. In a situation where multiple users have access to the consensus layer withdrawal private key, it is impossible for the network to differentiate the “legitimate” holder of the key from the “illegitimate”. However, there are signals that could be considered in a wider sense without changing core ethereum consensus. The most verifiable one is that the legitimate holder was also in control of the execution layer deposit address. Clients and node operators may optionally load a list of verifiable deposit addresses, a list of verifiable change withdrawal address messages to help broadcasts, and specify a rebroadcast delay that may create a social consensus for legitimate holders. 
 
-# Background
+## Motivation
+The motivation section should describe the "why" of this EIP. What problem does it solve? Why should someone want to implement this standard? What benefit does it provide to the Ethereum ecosystem? What use cases does this EIP address?
+
 The Consensus Layer change withdrawal credentials operation is [not yet fully specified](https://github.com/ethereum/consensus-specs/pull/2759), but is likely to have at least the following fields:
 * Validator index
 * Current withdrawal public key
 * Proposed execution layer withdrawal address
 * Signature by withdrawal private key over the prior fields
-
-The consensus layer change withdrawal credentials proposal is secure for a single user who has certainty their keys and mnemonic have not been compromised. However, as withdrawals on the consensus layer are not yet possible, no user can have absolute certainty that their keys are not compromised until the change withdrawal address is on chain, and by then too late to change. 
-
-In a situation where multiple users have access to the consensus layer withdrawal private key, it is impossible for the network to differentiate the “legitimate” holder of the key from the “illegitimate”. However, there are signals that could be considered in a wider sense. The most verifiable one is that the legitimate holder was also in control of the execution layer deposit address, in which case the suggestion is to require the proposed withdrawal address to be verified by the execution layer deposit address. 
-
+	
 Setting a withdrawal address to an execution layer address was not supported by the eth2.0-deposit-cli until v1.1.1 on March 23, 2021, leaving some early adopters wishing they could force change their execution layer address earlier. Forcing this change is not something that can be enforced in-protocol, partly due to lack of information on the beacon chain about the execution layer deposit address and partly due to the fact that this was never listed as a requirement. It is also possible that the execution layer deposit address is no longer under the control of the legitimate holder of the withdrawal private key. 
 
 However, it is possible for individual nodes to locally restrict the changes they wish to include in blocks they propose, and which they propagate around the network, in a way that does not change consensus. It is also possible for client nodes to help broadcast signed change withdrawal address requests to ensure as many nodes witness this change as soon as possible in a fair manner. Further, such change withdrawal address signed messages can be preloaded into clients in advance to further help nodes filter attacking requests.
@@ -192,3 +201,43 @@ ContestedVerified-datetime.txt
 ```
 validator_index,current_withdrawal_public_key,proposed_withdrawal_address,consensus_layer_withdrawal_signature,email
 ```
+
+
+## Specification
+The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in RFC 2119.
+
+The technical specification should describe the syntax and semantics of any new feature. The specification should be detailed enough to allow competing, interoperable implementations for any of the current Ethereum platforms (go-ethereum, parity, cpp-ethereum, ethereumj, ethereumjs, and [others](https://github.com/ethereum/wiki/wiki/Clients)).
+
+## Rationale
+The rationale fleshes out the specification by describing what motivated the design and why particular design decisions were made. It should describe alternate designs that were considered and related work, e.g. how the feature is supported in other languages.
+
+## Backwards Compatibility
+All EIPs that introduce backwards incompatibilities must include a section describing these incompatibilities and their severity. The EIP must explain how the author proposes to deal with these incompatibilities. EIP submissions without a sufficient backwards compatibility treatise may be rejected outright.
+
+## Test Cases
+This proposal does not change consensus. However, client test cases will be added here once the proposal is formalized.
+
+## Reference Implementation
+An optional section that contains a reference/example implementation that people can use to assist in understanding or implementing this specification.  If the implementation is too large to reasonably be included inline, then consider adding it as one or more files in `../assets/eip-####/`.
+
+## Security Considerations
+All EIPs must contain a section that discusses the security implications/considerations relevant to the proposed change. Include information that might be important for security discussions, surfaces risks and can be used throughout the life cycle of the proposal. E.g. include security-relevant design decisions, concerns, important discussions, implementation-specific guidance and pitfalls, an outline of threats and risks and how they are being addressed. EIP submissions missing the "Security Considerations" section will be rejected. An EIP cannot proceed to status "Final" without a Security Considerations discussion deemed sufficient by the reviewers.
+
+## Copyright
+Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
+	
+# ConsensusLayerWithdrawalProtection
+
+ConsensusLayerWithdrawalProtection
+
+
+
+# Consensus Layer Withdrawal Protection
+First proposed by [Jim McDonald](https://ethresear.ch/u/jgm/summary), with contributions from [Pietje Puk](https://ethresear.ch/u/pietjepuk/summary), [Benjamin Chodroff](https://ethresear.ch/u/benjaminchodroff/summary) 
+
+Thanks to the [Ethereum Research](https://ethresear.ch/) team, [ETHStaker](https://ethstaker.cc/) solo staking community, and the hackers who encourage us to make Ethereum even better
+
+
+
+
+
