@@ -3,7 +3,7 @@ eip: <to be assigned>
 title: Consensus Layer Withdrawal Protection
 description: Provides additional security in the "change withdrawal address" operation when a consensus layer mnemonic may be compromised, without changing consensus
 author: Benjamin Chodroff (@benjaminchodroff), Jim McDonald (@mcdee)
-discussions-to: <URL>
+discussions-to: https://ethereum-magicians.org/t/consensus-layer-withdrawal-protection/8161
 status: Draft
 type: Standards Track
 category (*only required for Standards Track): Interface
