@@ -21,21 +21,15 @@ At the launch of the Capella/Shanghai hardfork, every validator with Withdrawal 
 
 ### Mainnet
 ```
-# Download this repository
-git clone https://github.com/benjaminchodroff/ConsensusLayerWithdrawalProtection
-cd ConsensusLayerWithdrawalProtection
-# Download ethdo
-git clone https://github.com/wealdtech/ethdo.git
-cd ethdo
-# Build ethdo (ensure you have go >= 1.13)
-go build .
+# Download the latest ethdo release
+https://github.com/wealdtech/ethdo/releases/
 # Unpack the offline-preparation.json file (or you may generate your own using --prepare-offline and your own beacon node)
 tar -zxf ../offline-preparation.json.mainnet.tar.gz
 cp offline-preparation.json.mainnet offline-preparation.json
 ./ethdo validator credentials set --offline  --json --fork-version 0x03000000 --withdrawal-address 0xAnExecutionLayerAddress --mnemonic "your seed phrase"
 history -c 
 ```
-Combine your resulting change-operations.json file into change-operations-clwp-mainnet.json file, and submit a pull request to have it included in CLWP protection. 
+Move the resulting change-operations.json file into the mainnet folder with individual files for each validatorIndex.json, and submit a pull request to have it included in CLWP protection. If you need help or prefer not to link your GitHub account to your validator, reach out to an admin on the Support below and we can assist. 
 Volunteer to run the broadcast of change-operations-clwp-mainnet.json on your node to help protect the community.  
 
 ### Goerli
