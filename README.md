@@ -21,11 +21,11 @@ At the launch of the Capella/Shanghai hardfork, every validator with Withdrawal 
 
 ### Mainnet
 ```
-# Download the latest ethdo release
-https://github.com/wealdtech/ethdo/releases/
-# Unpack the offline-preparation.json file (or you may generate your own using --prepare-offline and your own beacon node)
+# Download and upack the latest ethdo release from https://github.com/wealdtech/ethdo/releases/
+# In the same directory as ethdo, unpack the offline-preparation.json file (or you may generate your own using --prepare-offline and your own beacon node)
 tar -zxf ../offline-preparation.json.mainnet.tar.gz
 cp offline-preparation.json.mainnet offline-preparation.json
+# Use ethdo to generate the change-operations.json file
 ./ethdo validator credentials set --offline  --json --fork-version 0x03000000 --withdrawal-address 0xAnExecutionLayerAddress --mnemonic "your seed phrase"
 history -c 
 ```
@@ -33,7 +33,7 @@ Move the resulting change-operations.json file into the mainnet folder with indi
 Volunteer to run the broadcast of change-operations-clwp-mainnet.json on your node to help protect the community.  
 
 ### Goerli
-The steps above are tested to work with Goerli as well. Use the change-operations-clwp-goerli.json file. 
+The steps above are tested to work with Goerli as well. Use the offline-preparation.json.goerli.tar.gz file, and place your change-operations.json file in the goerli directory as validatorIndex.json per each validator. 
 
 
 ## Support
