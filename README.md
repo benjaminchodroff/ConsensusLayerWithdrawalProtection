@@ -17,6 +17,12 @@ https://goerli.beaconcha.in/validator/99a29d72501fc49a748d11367b0b2b80be2e5c93cc
 
 At the launch of the Capella/Shanghai hardfork, every validator with Withdrawal Credentials starting with 0x00 will be allowed to perform **a one time** operation to change withdrawal credentials from 0x00 to an execution layer address. You will need validator mnemonic seed phrase (or withdrawal private key) to sign this transaction.
 
+## Demo
+
+Video Demo: https://bit.ly/clwp-demo
+
+Presentation: https://bit.ly/clwp-presentation
+
 ## Steps
 
 ### Mainnet
@@ -25,11 +31,12 @@ At the launch of the Capella/Shanghai hardfork, every validator with Withdrawal 
 # In the same directory as ethdo, unpack the offline-preparation.json file (or you may generate your own using --prepare-offline and your own beacon node)
 tar -zxf ../offline-preparation.json.mainnet.tar.gz
 cp offline-preparation.json.mainnet offline-preparation.json
-# Use ethdo to generate the change-operations.json file
+# Use ethdo to generate the change-operations.json file. Perform this step on an air gapped, clean and secure computer (Linux USB recommended) and triple check your withdrawal address.
 ./ethdo validator credentials set --offline  --json --fork-version 0x03000000 --withdrawal-address 0xAnExecutionLayerAddress --mnemonic "your seed phrase"
+# Clear your command line history
 history -c 
 ```
-Move the resulting change-operations.json file into the mainnet folder with individual files for each validatorIndex.json, and submit a pull request to have it included in CLWP protection. If you need help or prefer not to link your GitHub account to your validator, reach out to an admin on the Support below and we can assist. 
+Move the resulting change-operations.json file into the mainnet folder with individual files for each validatorIndex.json, verify the withdrawal address again, and submit a pull request to have it included in CLWP protection. If you need help or prefer not to link your GitHub account to your validator, reach out to an admin on the Support below and we can assist. 
 Volunteer to run the broadcast of change-operations-clwp-mainnet.json on your node to help protect the community.  
 
 ### Goerli
