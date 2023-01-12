@@ -25,21 +25,28 @@ Presentation: https://bit.ly/clwp-presentation
 
 ## Steps
 
+2023-01-12 - Apologies, but CLWP submissions are temporarily halted until the Ethereum core devs finalize the fork version handling for signatures. https://github.com/ethereum/consensus-specs/pull/3206
+
+All offline-preparation.json* files have been removed to avoid mistakes. Please check back in "a few days"
+
 ### Mainnet
+
 ```
 # Download and upack the latest ethdo release from https://github.com/wealdtech/ethdo/releases/
 # In the same directory as ethdo, unpack the offline-preparation.json file (or you may generate your own using --prepare-offline and your own beacon node)
 tar -zxf ../offline-preparation.json.mainnet.tar.gz
 cp offline-preparation.json.mainnet offline-preparation.json
 # Use ethdo to generate the change-operations.json file. Perform this step on an air gapped, clean and secure computer (Linux USB recommended) and triple check your withdrawal address.
-./ethdo validator credentials set --offline  --json --fork-version 0x03000000 --withdrawal-address 0xAnExecutionLayerAddress --mnemonic "your seed phrase"
+./ethdo validator credentials set --offline  --json --withdrawal-address 0xAnExecutionLayerAddress --mnemonic "your seed phrase"
 # Clear your command line history
 history -c 
 ```
+
 Move the resulting change-operations.json file into the mainnet folder with individual files for each validatorIndex.json, verify the withdrawal address again, and submit a pull request to have it included in CLWP protection. If you need help or prefer not to link your GitHub account to your validator, reach out to an admin on the Support below and we can assist. 
 Volunteer to run the broadcast of change-operations-clwp-mainnet.json on your node to help protect the community.  
 
 ### Goerli
+
 The steps above are tested to work with Goerli as well. Use the offline-preparation.json.goerli.tar.gz file, and place your change-operations.json file in the goerli directory as validatorIndex.json per each validator. 
 
 
