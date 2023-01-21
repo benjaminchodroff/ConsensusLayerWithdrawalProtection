@@ -27,7 +27,7 @@ Presentation: https://bit.ly/clwp-presentation
 
 2023-01-12 - Apologies, but CLWP submissions are temporarily halted until the Ethereum core devs finalize the fork version handling for signatures. https://github.com/ethereum/consensus-specs/pull/3206
 
-All offline-preparation.json* files have been removed to avoid mistakes. Please check back in "a few days"
+2023-01-21 - We are accepting CLWP submissions using ethdo version 1.27 or later. Fork version offline-preparation files have been updated for Capella
 
 ### Mainnet
 
