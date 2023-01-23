@@ -1,0 +1,108 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Verify CLWP
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  verifyCLWP:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Get Changed Mainnet Validators
+        id: changed-mainnet
+        uses: tj-actions/changed-files@v35.4.4
+        with:
+          files: mainnet/*
+          match_directories: false
+          
+      - name: Get Changed Goerli Validators
+        id: changed-goerli
+        uses: tj-actions/changed-files@v35.4.4
+        with:
+          files: goerli/*
+          match_directories: false
+          
+      - name: List all changed validators
+        run: |
+          for file in ${{ steps.changed-mainnet.outputs.all_changed_files }}; do
+            echo "$file mainnet validator was changed"
+          done
+          for file in ${{ steps.changed-goerli.outputs.all_changed_files }}; do
+            echo "$file goerli validator was changed"
+          done
+          
+      - name: Git Clone Ethdo
+        uses: sudosubin/git-clone-action@v1.0.1
+        with:
+          repository: wealdtech/ethdo
+          platform: github
+          ref: v1.27.0
+          path: ethdo
+        
+      - name: Setup Go environment
+        uses: actions/setup-go@v3.5.0
+        with:
+          go-version: 1.18
+          
+      - name: Build Ethdo
+        run: |
+          cd $GITHUB_WORKSPACE/ethdo
+          go build .
+          ./ethdo version
+          
+      - name: Install jq
+        run: sudo apt-get install -y jq
+     
+      - name: Verify Goerli Validators
+        run: |
+          cd $GITHUB_WORKSPACE
+          tar -zxf offline-preparation.json.goerli.tar.gz
+          mv offline-preparation.json.goerli ethdo/offline-preparation.json
+          cd ethdo
+          #for i in `ls $GITHUB_WORKSPACE/goerli/`;do echo "Verifying validator $i"; ./ethdo validator credentials set --offline --signed-operations "`cat $GITHUB_WORKSPACE/goerli/$i`"; done
+          for file in ${{ steps.changed-goerli.outputs.all_changed_files }}; do
+            echo "Verifying goerli validator $file"
+            # Ensure there is one element in array
+            cat $GITHUB_WORKSPACE/$file | jq -e '. | length==1'
+            # Ensure the validator index matches the filename
+            filename=$(basename -- "$file")
+            index="${filename%.*}"
+            extension="${filename##*.}"
+            cat $GITHUB_WORKSPACE/goerli/${index}.json | jq -e ".[0].message.validator_index|tonumber==$index"
+            ./ethdo validator credentials set --offline --signed-operations "`cat $GITHUB_WORKSPACE/$file`"
+          done
+  
+      - name: Verify Mainnet Validators
+        run: |
+          cd $GITHUB_WORKSPACE
+          tar -zxf offline-preparation.json.mainnet.tar.gz
+          mv offline-preparation.json.mainnet ethdo/offline-preparation.json
+          cd ethdo
+          #for i in `ls $GITHUB_WORKSPACE/mainnet/`;do echo "Verifying validator $i"; ./ethdo validator credentials set --offline --signed-operations "`cat $GITHUB_WORKSPACE/mainnet/$i`"; done
+          for file in ${{ steps.changed-mainnet.outputs.all_changed_files }}; do
+            echo "Verifying mainnet validator $file"
+            # Ensure there is one element in array
+            cat $GITHUB_WORKSPACE/$file | jq -e '. | length==1'
+            # Ensure the validator index matches the filename
+            filename=$(basename -- "$file")
+            index="${filename%.*}"
+            extension="${filename##*.}"
+            cat $GITHUB_WORKSPACE/mainnet/${index}.json | jq -e ".[0].message.validator_index|tonumber==$index"
+            ./ethdo validator credentials set --offline --signed-operations "`cat $GITHUB_WORKSPACE/$file`"
+          done
