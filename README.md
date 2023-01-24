@@ -42,7 +42,11 @@ cp offline-preparation.json.mainnet offline-preparation.json
 history -c 
 ```
 
-Move the resulting change-operations.json file into the mainnet folder with individual files for each validatorIndex.json, verify the withdrawal address again, and submit a pull request to have it included in CLWP protection. If you need help or prefer not to link your GitHub account to your validator, reach out to an admin on the Support below and we can assist. If you have multiple validators, you will need to split the file to have a single submission manually using a text editor. Never modify the validator index, public key, or withdrawal address, or signature or it will invalidate the submission.  
+Move the resulting change-operations.json file into the mainnet folder with individual files for each validatorIndex.json, verify the withdrawal address again, and submit a pull request to have it included in CLWP protection. If you need help or prefer not to link your GitHub account to your validator, reach out to an admin on the Support below and we can assist. If you have multiple validators, you will need to split the file to have a single submission manually using a text editor. Never modify the validator index, public key, or withdrawal address, or signature or it will invalidate the submission. If you have many validators, you may install "jq" on linux and split the change-operations.json file using it:
+
+```
+for ((i=0; i<`jq -ec '.|length' change-operations.json`;i++)); do validator=`jq -ec ".[$i].message.validator_index|tonumber" change-operations.json`; echo "`jq -ec [".[$i]"] change-operations.json`" > ${validator}.json;done
+``` 
  
 Volunteer to run the broadcast of change-operations-clwp-mainnet.json on your node to help protect the community.  
 
