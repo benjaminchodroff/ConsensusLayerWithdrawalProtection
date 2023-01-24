@@ -37,12 +37,13 @@ Presentation: https://bit.ly/clwp-presentation
 tar -zxf ../offline-preparation.json.mainnet.tar.gz
 cp offline-preparation.json.mainnet offline-preparation.json
 # Use ethdo to generate the change-operations.json file. Perform this step on an air gapped, clean and secure computer (Linux USB recommended) and triple check your withdrawal address.
-./ethdo validator credentials set --offline  --json --withdrawal-address 0xAnExecutionLayerAddress --mnemonic "your seed phrase"
+./ethdo validator credentials set --offline --withdrawal-address 0xAnExecutionLayerAddress --mnemonic "your seed phrase"
 # Clear your command line history
 history -c 
 ```
 
-Move the resulting change-operations.json file into the mainnet folder with individual files for each validatorIndex.json, verify the withdrawal address again, and submit a pull request to have it included in CLWP protection. If you need help or prefer not to link your GitHub account to your validator, reach out to an admin on the Support below and we can assist. 
+Move the resulting change-operations.json file into the mainnet folder with individual files for each validatorIndex.json, verify the withdrawal address again, and submit a pull request to have it included in CLWP protection. If you need help or prefer not to link your GitHub account to your validator, reach out to an admin on the Support below and we can assist. If you have multiple validators, you will need to split the file to have a single submission manually using a text editor. Never modify the validator index, public key, or withdrawal address, or signature or it will invalidate the submission.  
+ 
 Volunteer to run the broadcast of change-operations-clwp-mainnet.json on your node to help protect the community.  
 
 ### Goerli
