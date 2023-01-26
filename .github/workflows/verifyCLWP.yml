@@ -52,7 +52,7 @@ jobs:
         with:
           repository: wealdtech/ethdo
           platform: github
-          ref: v1.27.0
+          ref: v1.27.1
           path: ethdo
         
       - name: Setup Go environment
