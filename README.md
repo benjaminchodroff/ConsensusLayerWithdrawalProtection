@@ -95,4 +95,6 @@ The steps above are tested to work with Goerli as well. Use the offline-preparat
 
 For community support, create an issue or join our OffChain Discord channel #ethereum-consensus-layer-withdrawal-protection https://discord.gg/pwuPA6K4zg
 
+## Volunteer
 
+We welcome every node operator to volunteer by loading CLWP submissions into their node in advance of the Capella hard fork on each chain. Please sign up to our mailing list on https://clwp.xyz to receive notice when we have detailed instructions in mid-February. There is no cost (you don't even need to stake), and there is no possibility of a penalty/slashing even if an attacker "wins the race" against a CLWP submission. Your beacon chain client will simply ignore the local submission and use the on chain consensus. All CLWP submissions may be independently verified and, even if a submission in this repository was invalid, your local beacon chain client would refuse to process it without penalty. 
