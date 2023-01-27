@@ -36,20 +36,35 @@ https://github.com/wealdtech/ethdo/releases/tag/v1.27.1
 2. Run  ethdo to generate a “change-operations.json” file. Choose either the “Easy without Node” or “Offline with Node” approach.
 
     * Easy without Node - use a cached “prepare offline” beacon node list from GitHub (no beacon node required, but needs secure offline computer):
+     
+        ```
         # Download https://github.com/benjaminchodroff/ConsensusLayerWithdrawalProtection/blob/main/offline-preparation.json.mainnet.tar.gz 
         tar -zxf offline-preparation.json.mainnet.tar.gz
         cp offline-preparation.json.mainnet offline-preparation.json
 
         # In the same directory as offline-preparation.json file, run ethdo (Triple check your withdrawal address)
         ./ethdo validator credentials set --offline --mnemonic="abandon … art" --withdrawal-address=0x0123…cdef
+        ```
 
     * Offline with Node - prepare your own offline-preparation.json file using the “--offline” flag (Advanced)
-        # On Beacon Node: ./ethdo validator credentials set --prepare-offline
+     
+        ```
+        # On Beacon Node: 
+        ./ethdo validator credentials set --prepare-offline
+        
         # Copy the offline-preparation.json and ethdo to your airgapped secure machine
-        # Secure Machine: ./ethdo validator credentials set --offline --mnemonic="abandon … art" --withdrawal-address=0x0123…cdef
+        
+        # Secure Machine: 
+        ./ethdo validator credentials set --offline --mnemonic="abandon … art" --withdrawal-address=0x0123…cdef
+        
         # Copy the resulting change-operations.json file back to your online computer
+        ```
 
-** Don’t forget to wipe your command line history to prevent your seed phrase from being stored in memory: history -c **
+Don’t forget to wipe your command line history to prevent your seed phrase from being stored in memory:
+
+```
+history -c
+```
 
 3. Inspect the resulting change-operations.json, and move it to a validatorIndex.json file (such as 123456.json) per validator and submit a pull request to have it included (ask for help in Discord) https://github.com/benjaminchodroff/ConsensusLayerWithdrawalProtection
 
