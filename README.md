@@ -31,7 +31,6 @@ CLWP Presentation: https://bit.ly/clwp-presentation
 
 ### Mainnet
 
-```
 1. Download an ethdo release, an open source Ethereum command line interface for validator actions, onto a clean computer
 https://github.com/wealdtech/ethdo/releases/tag/v1.27.1 
 2. Run  ethdo to generate a “change-operations.json” file. Choose either the “Easy without Node” or “Offline with Node” approach.
@@ -41,7 +40,7 @@ https://github.com/wealdtech/ethdo/releases/tag/v1.27.1
         tar -zxf offline-preparation.json.mainnet.tar.gz
         cp offline-preparation.json.mainnet offline-preparation.json
 
-        # In the same directory as offline-preparation.json file, run ethdo
+        # In the same directory as offline-preparation.json file, run ethdo (Triple check your withdrawal address)
         ./ethdo validator credentials set --offline --mnemonic="abandon … art" --withdrawal-address=0x0123…cdef
 
     * Offline with Node - prepare your own offline-preparation.json file using the “--offline” flag (Advanced)
@@ -62,10 +61,7 @@ https://github.com/wealdtech/ethdo/releases/tag/v1.27.1
 If you have multiple validators, you will need a text editor to split the file - review the format of existing submissions as an example.
 Never modify the validator_index, from_bls_pubkey, to_execution_address, or signature or it will invalidate the submission. 
 
-4. Done! We will review your submission, merge it, and many CLWP node operators will volunteer to broadcast your set withdrawal address. Submissions must be received by February 28, 2023. You may broadcast your own submissions and we welcome others to help broadcast all the CLWP submissions to their own beacon nodes.
-
-If we receive conflicting change operations from multiple parties, we will launch a community moderated mechanism to arbitrate the issues. 
-```
+4. Done! We will review your submission, merge it, and many CLWP node operators will volunteer to broadcast your set withdrawal address. Submissions must be received by February 28, 2023. You may broadcast your own submissions and we welcome others to help broadcast all the CLWP submissions to their own beacon nodes. If we receive conflicting change operations from multiple parties, we will launch a curated list on Kleros to arbitrate the issues. 
 
 Move the resulting change-operations.json file into the mainnet folder with individual files for each validatorIndex.json, verify the withdrawal address again, and submit a pull request to have it included in CLWP protection. If you need help or prefer not to link your GitHub account to your validator, reach out to an admin on the Support below and we can assist. If you have multiple validators, you will need to split the file to have a single submission manually using a text editor. Never modify the validator index, public key, or withdrawal address, or signature or it will invalidate the submission. If you have many validators, you may install "jq" on linux and split the change-operations.json file using it:
 
