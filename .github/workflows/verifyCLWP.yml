@@ -38,6 +38,13 @@ jobs:
           files: goerli/*
           match_directories: false
           
+      - name: Get Changed Zhejiang Validators
+        id: changed-zhejiang
+        uses: tj-actions/changed-files@v35.4.4
+        with:
+          files: zhejiang/*
+          match_directories: false
+          
       - name: List all changed validators
         run: |
           for file in ${{ steps.changed-mainnet.outputs.all_changed_files }}; do
@@ -46,13 +53,16 @@ jobs:
           for file in ${{ steps.changed-goerli.outputs.all_changed_files }}; do
             echo "$file goerli validator was changed"
           done
+          for file in ${{ steps.changed-zhejiang.outputs.all_changed_files }}; do
+            echo "$file zhejiang validator was changed"
+          done
           
       - name: Git Clone Ethdo
         uses: sudosubin/git-clone-action@v1.0.1
         with:
           repository: wealdtech/ethdo
           platform: github
-          ref: v1.27.1
+          ref: v1.28.0
           path: ethdo
         
       - name: Setup Go environment
@@ -68,6 +78,25 @@ jobs:
           
       - name: Install jq
         run: sudo apt-get install -y jq
+        
+      - name: Verify Zhejiang Validators
+        run: |
+          cd $GITHUB_WORKSPACE
+          tar -zxf offline-preparation.json.zhejiang.tar.gz
+          mv offline-preparation.json.zhejiang ethdo/offline-preparation.json
+          cd ethdo
+          #for i in `ls $GITHUB_WORKSPACE/goerli/`;do echo "Verifying validator $i"; ./ethdo validator credentials set --offline --signed-operations "`cat $GITHUB_WORKSPACE/goerli/$i`"; done
+          for file in ${{ steps.changed-zhejiang.outputs.all_changed_files }}; do
+            echo "Verifying zhejiang validator $file"
+            # Ensure there is one element in array
+            cat $GITHUB_WORKSPACE/$file | jq -e '. | length==1'
+            # Ensure the validator index matches the filename
+            filename=$(basename -- "$file")
+            index="${filename%.*}"
+            extension="${filename##*.}"
+            cat $GITHUB_WORKSPACE/zhejiang/${index}.json | jq -e ".[0].message.validator_index|tonumber==$index"
+            ./ethdo validator credentials set --offline --signed-operations "`cat $GITHUB_WORKSPACE/$file`"
+          done
      
       - name: Verify Goerli Validators
         run: |
