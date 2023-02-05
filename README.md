@@ -38,8 +38,8 @@ https://github.com/wealdtech/ethdo/releases/tag/v1.27.1
     * Easy without Node - use a cached “prepare offline” beacon node list from GitHub (no beacon node required, but needs secure offline computer):
      
         ```
-        # Download https://github.com/benjaminchodroff/ConsensusLayerWithdrawalProtection/blob/main/offline-preparation.json.mainnet.tar.gz 
-        tar -zxf offline-preparation.json.mainnet.tar.gz
+        # Download the latest https://github.com/benjaminchodroff/ConsensusLayerWithdrawalProtection/blob/main/offline-preparation.json.mainnet.*.tar.gz 
+        tar -zxf offline-preparation.json.mainnet.*.tar.gz
         cp offline-preparation.json.mainnet offline-preparation.json
 
         # In the same directory as offline-preparation.json file, run ethdo (Triple check your withdrawal address)
@@ -85,11 +85,11 @@ Move the resulting change-operations.json file into the mainnet folder with indi
 for ((i=0; i<`jq -ec '.|length' change-operations.json`;i++)); do validator=`jq -ec ".[${i}].message.validator_index|tonumber" change-operations.json`; echo "`jq -ec "["".[${i}]""]" change-operations.json`" > ${validator}.json;done
 ``` 
  
-Volunteer to run the broadcast of change-operations-clwp-mainnet.json on your node to help protect the community.  
+Volunteer to run the broadcast of each CLWP submission on your node to help protect the community.  
 
 ### Goerli
 
-The steps above are tested to work with Goerli as well. Use the offline-preparation.json.goerli.tar.gz file, and place your change-operations.json file in the goerli directory as validatorIndex.json per each validator. 
+The steps above are tested to work with Goerli as well. Use the offline-preparation.json.goerli.*.tar.gz file, and place your change-operations.json file in the goerli directory as validatorIndex.json per each validator. 
 
 
 ## Support

@@ -82,10 +82,9 @@ jobs:
       - name: Verify Zhejiang Validators
         run: |
           cd $GITHUB_WORKSPACE
-          tar -zxf offline-preparation.json.zhejiang.tar.gz
+          tar -zxf offline-preparation.json.zhejiang.*.tar.gz
           mv offline-preparation.json.zhejiang ethdo/offline-preparation.json
           cd ethdo
-          #for i in `ls $GITHUB_WORKSPACE/goerli/`;do echo "Verifying validator $i"; ./ethdo validator credentials set --offline --signed-operations "`cat $GITHUB_WORKSPACE/goerli/$i`"; done
           for file in ${{ steps.changed-zhejiang.outputs.all_changed_files }}; do
             echo "Verifying zhejiang validator $file"
             # Ensure there is one element in array
@@ -101,10 +100,9 @@ jobs:
       - name: Verify Goerli Validators
         run: |
           cd $GITHUB_WORKSPACE
-          tar -zxf offline-preparation.json.goerli.tar.gz
+          tar -zxf offline-preparation.json.goerli.*.tar.gz
           mv offline-preparation.json.goerli ethdo/offline-preparation.json
           cd ethdo
-          #for i in `ls $GITHUB_WORKSPACE/goerli/`;do echo "Verifying validator $i"; ./ethdo validator credentials set --offline --signed-operations "`cat $GITHUB_WORKSPACE/goerli/$i`"; done
           for file in ${{ steps.changed-goerli.outputs.all_changed_files }}; do
             echo "Verifying goerli validator $file"
             # Ensure there is one element in array
@@ -120,10 +118,9 @@ jobs:
       - name: Verify Mainnet Validators
         run: |
           cd $GITHUB_WORKSPACE
-          tar -zxf offline-preparation.json.mainnet.tar.gz
+          tar -zxf offline-preparation.json.mainnet.*.tar.gz
           mv offline-preparation.json.mainnet ethdo/offline-preparation.json
           cd ethdo
-          #for i in `ls $GITHUB_WORKSPACE/mainnet/`;do echo "Verifying validator $i"; ./ethdo validator credentials set --offline --signed-operations "`cat $GITHUB_WORKSPACE/mainnet/$i`"; done
           for file in ${{ steps.changed-mainnet.outputs.all_changed_files }}; do
             echo "Verifying mainnet validator $file"
             # Ensure there is one element in array
