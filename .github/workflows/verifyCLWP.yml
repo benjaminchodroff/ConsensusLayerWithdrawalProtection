@@ -46,6 +46,7 @@ jobs:
           match_directories: false
           
       - name: List all changed validators
+        if: (steps.changed-zhejiang.outputs.any_changed == 'true') || (steps.changed-goerli.outputs.any_changed == 'true') || (steps.changed-mainnet.outputs.any_changed == 'true')
         run: |
           for file in ${{ steps.changed-mainnet.outputs.all_changed_files }}; do
             echo "$file mainnet validator was changed"
@@ -58,6 +59,7 @@ jobs:
           done
           
       - name: Git Clone Ethdo
+        if: (steps.changed-zhejiang.outputs.any_changed == 'true') || (steps.changed-goerli.outputs.any_changed == 'true') || (steps.changed-mainnet.outputs.any_changed == 'true')
         uses: sudosubin/git-clone-action@v1.0.1
         with:
           repository: wealdtech/ethdo
@@ -66,20 +68,24 @@ jobs:
           path: ethdo
         
       - name: Setup Go environment
+        if: (steps.changed-zhejiang.outputs.any_changed == 'true') || (steps.changed-goerli.outputs.any_changed == 'true') || (steps.changed-mainnet.outputs.any_changed == 'true')
         uses: actions/setup-go@v3.5.0
         with:
           go-version: 1.18
           
       - name: Build Ethdo
+        if: (steps.changed-zhejiang.outputs.any_changed == 'true') || (steps.changed-goerli.outputs.any_changed == 'true') || (steps.changed-mainnet.outputs.any_changed == 'true')
         run: |
           cd $GITHUB_WORKSPACE/ethdo
           go build .
           ./ethdo version
           
       - name: Install jq
+        if: (steps.changed-zhejiang.outputs.any_changed == 'true') || (steps.changed-goerli.outputs.any_changed == 'true') || (steps.changed-mainnet.outputs.any_changed == 'true')
         run: sudo apt-get install -y jq
         
       - name: Verify Zhejiang Validators
+        if: steps.changed-zhejiang.outputs.any_changed == 'true'
         run: |
           cd $GITHUB_WORKSPACE
           tar -zxf offline-preparation.json.zhejiang.*.tar.gz
@@ -98,6 +104,7 @@ jobs:
           done
      
       - name: Verify Goerli Validators
+        if: steps.changed-goerli.outputs.any_changed == 'true'
         run: |
           cd $GITHUB_WORKSPACE
           tar -zxf offline-preparation.json.goerli.*.tar.gz
@@ -116,6 +123,7 @@ jobs:
           done
   
       - name: Verify Mainnet Validators
+        if: steps.changed-mainnet.outputs.any_changed == 'true'
         run: |
           cd $GITHUB_WORKSPACE
           tar -zxf offline-preparation.json.mainnet.*.tar.gz
