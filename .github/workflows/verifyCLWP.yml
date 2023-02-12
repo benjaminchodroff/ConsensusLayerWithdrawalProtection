@@ -106,7 +106,7 @@ jobs:
             filename=$(basename -- "$file")
             index="${filename%.*}"
             extension="${filename##*.}"
-            cat $GITHUB_WORKSPACE/zhejiang/${index}.json | jq -e ".[0].message.validator_index|tonumber|tostring==$index"
+            cat $GITHUB_WORKSPACE/zhejiang/${index}.json | jq -e ".[0].message.validator_index==\"${index}\""
             echo "Ensure the validator signature is valid"
             ./ethdo validator credentials set --offline --signed-operations "`cat $GITHUB_WORKSPACE/$file`"
           done
@@ -126,7 +126,7 @@ jobs:
             filename=$(basename -- "$file")
             index="${filename%.*}"
             extension="${filename##*.}"
-            cat $GITHUB_WORKSPACE/goerli/${index}.json | jq -e ".[0].message.validator_index|tonumber|tostring==$index"
+            cat $GITHUB_WORKSPACE/goerli/${index}.json | jq -e ".[0].message.validator_index==\"${index}\""
             echo "Ensure the validator signature is valid"
             ./ethdo validator credentials set --offline --signed-operations "`cat $GITHUB_WORKSPACE/$file`"
           done
@@ -146,7 +146,7 @@ jobs:
             filename=$(basename -- "$file")
             index="${filename%.*}"
             extension="${filename##*.}"
-            cat $GITHUB_WORKSPACE/mainnet/${index}.json | jq -e ".[0].message.validator_index|tonumber|tostring==$index"
+            cat $GITHUB_WORKSPACE/mainnet/${index}.json | jq -e ".[0].message.validator_index==\"${index}\""
             echo "Ensure the validator signature is valid"
             ./ethdo validator credentials set --offline --signed-operations "`cat $GITHUB_WORKSPACE/$file`"
           done
