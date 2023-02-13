@@ -21,7 +21,7 @@ At the launch of the Capella/Shanghai hardfork, every validator with Withdrawal 
 
 ## Demo
 
-CLWP Video Demo: https://www.youtube.com/watch?v=EWkGyorgpAg
+CLWP Video Demo - PEEPanEIP 99: [https://www.youtube.com/watch?v=EWkGyorgpAg](https://www.youtube.com/watch?v=C8rxSljl2PM)
 
 CLWP Presentation: https://docs.google.com/presentation/d/1qV0NP2-5UZI51Ja7Vf_ANOR9AqIPvNpfuTzxbJVCn90/edit
 
