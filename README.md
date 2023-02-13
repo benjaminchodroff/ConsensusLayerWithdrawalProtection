@@ -27,12 +27,12 @@ CLWP Presentation: https://docs.google.com/presentation/d/1qV0NP2-5UZI51Ja7Vf_AN
 
 ## Steps
 
-2023-01-21 - We are accepting CLWP submissions using ethdo version 1.27 or later. An offline-preparation.json file has been updated for Capella
+2023-01-21 - We are accepting CLWP submissions using ethdo version 1.27.0 or later. An offline-preparation.json file has been updated for Capella
 
 ### Mainnet
 
 1. Download an ethdo release, an open source Ethereum command line interface for validator actions, onto a clean computer
-https://github.com/wealdtech/ethdo/releases/tag/v1.27.1 
+https://github.com/wealdtech/ethdo/releases/tag/v1.28.0
 2. Run  ethdo to generate a “change-operations.json” file. Choose either the “Easy without Node” or “Offline with Node” approach.
 
     * Easy without Node - use a cached “prepare offline” beacon node list from GitHub (no beacon node required, but needs secure offline computer):
