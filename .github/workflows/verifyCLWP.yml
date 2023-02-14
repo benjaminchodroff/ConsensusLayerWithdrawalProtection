@@ -24,6 +24,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Get all changed files outside of chains
+        id: changed-parent
+        uses: tj-actions/changed-files@v35.4.4
+        with:
+          files_ignore: |
+            mainnet/*
+            goerli/*
+            zhejiang/*
+
       - name: Get Changed Mainnet Validators
         id: changed-mainnet
         uses: tj-actions/changed-files@v35.4.4
@@ -58,11 +67,16 @@ jobs:
             echo "$file zhejiang validator was changed"
           done
 
-      - name: Error on modified and deleted validators 
-        if: (steps.changed-zhejiang.outputs.all_changed_and_modified_files != steps.changed-zhejiang.outputs.added_files) || (steps.changed-goerli.all_changed_and_modified_files != steps.changed-goerli.outputs.added_files ) || (steps.changed-mainnet.outputs.all_changed_and_modified_files != steps.changed-mainnet.outputs.added_files)
+      - name: Error on modified and deleted validators, or outside files 
+        if: (steps.changed-zhejiang.outputs.all_changed_and_modified_files != steps.changed-zhejiang.outputs.added_files) || (steps.changed-goerli.all_changed_and_modified_files != steps.changed-goerli.outputs.added_files ) || (steps.changed-mainnet.outputs.all_changed_and_modified_files != steps.changed-mainnet.outputs.added_files) || (steps.changed-parent.outputs.any_modified == 'true' ) && github.actor != 'benjaminchodroff'
         run: |
           echo "WARNING: Validator changes include a copied, modified, deleted, renamed, or other dangerous change"
           echo "Submission must be manually reviewed"
+          echo "Submitter: ${{github.actor}}"
+          echo "Zhejiang: ${{steps.changed-zhejiang.outputs.all_changed_and_modified_files}}"
+          echo "Goerli: ${{steps.changed-goerli.outputs.all_changed_and_modified_files}}"
+          echo "Mainnet: ${{steps.changed-mainnet.outputs.all_changed_and_modified_files}}"
+          echo "All: ${{steps.changed-parent.outputs.all_changed_and_modified_files}}"
           exit 1
 
       - name: Git Clone Ethdo
