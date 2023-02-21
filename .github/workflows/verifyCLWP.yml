@@ -68,7 +68,7 @@ jobs:
           done
 
       - name: Error on modified and deleted validators, or outside files 
-        if: ((steps.changed-zhejiang.outputs.all_changed_and_modified_files != steps.changed-zhejiang.outputs.added_files) || (steps.changed-goerli.all_changed_and_modified_files != steps.changed-goerli.outputs.added_files ) || (steps.changed-mainnet.outputs.all_changed_and_modified_files != steps.changed-mainnet.outputs.added_files) || (steps.changed-parent.outputs.any_modified == 'true' )) && github.actor != 'benjaminchodroff'
+        if: ${{ (steps.changed-zhejiang.outputs.all_changed_and_modified_files != steps.changed-zhejiang.outputs.added_files) || (steps.changed-goerli.all_changed_and_modified_files != steps.changed-goerli.outputs.added_files ) || (steps.changed-mainnet.outputs.all_changed_and_modified_files != steps.changed-mainnet.outputs.added_files) || (steps.changed-parent.outputs.any_modified == 'true' && github.actor != 'benjaminchodroff') }}
         run: |
           echo "WARNING: Validator changes include a copied, modified, deleted, renamed, or other dangerous change"
           echo "Submission must be manually reviewed"
