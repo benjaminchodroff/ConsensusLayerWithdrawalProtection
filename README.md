@@ -98,4 +98,14 @@ For community support, create an issue or join our OffChain Discord channel #eth
 
 ## Volunteer
 
-We welcome every node operator to volunteer by loading CLWP submissions into their node in advance of the Capella hard fork on each chain. Please sign up to our mailing list on https://clwp.xyz to receive notice when we have detailed instructions in mid-February. There is no cost (you don't even need to stake), and there is no penalty even if an attacker "wins the race" against a CLWP submission. Your beacon chain client will simply ignore the local submission and use the on chain consensus. All CLWP submissions may be independently verified and, even if a submission in this repository was invalid, your local beacon chain client would refuse to process it without penalty. 
+We welcome every node operator to volunteer by loading CLWP submissions into their node in advance of the Capella hard fork on each chain. 
+
+```
+jq -s 'add' /path/to/ConsensusLayerWithdrawalProtection/mainnet/*.json > change-operations.json
+./ethdo validator credentials set --connection http://YourNodeIP:5052 --allow-insecure-connections 
+echo $?
+```
+
+If you see "0" with no error messages, then you have set the CLWP submissions to your node. You may also confirm in the logs for your beacon node. 
+
+Please sign up to our mailing list on https://clwp.xyz to receive notice when we have more detailed instructions in March. There is no cost (you don't even need to stake), and there is no penalty even if an attacker "wins the race" against a CLWP submission. Your beacon chain client will simply ignore the local submission and use the on chain consensus. All CLWP submissions may be independently verified and, even if a submission in this repository was invalid, your local beacon chain client would refuse to process it without penalty. 
