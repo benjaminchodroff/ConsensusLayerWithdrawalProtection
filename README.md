@@ -27,6 +27,14 @@ CLWP Presentation: https://docs.google.com/presentation/d/1qV0NP2-5UZI51Ja7Vf_AN
 
 ## Steps
 
+2023-02-27 - We will close community CLWP submissions via GitHub after 2/28. If you require to use CLWP for either contesting an existing OR submitting a new validator index, please submit it via Kleros Curate which requires staking 0.474 ETH/validator for one week (refunded if valid), and pay the ETH mainnet gas costs (about ~$5 USD/validator): 
+https://curate.kleros.io/tcr/1/0x479083b5343aB89bb39608e3176D750c8A6957B5. 
+
+If you have any questions, please ask in the OffChain CLWP discord before using Kleros: 
+https://discord.gg/pwuPA6K4zg. 
+
+This GitHub repository will not attempt to moderate any Kleros submissions at least 14 days prior to the Ethereum mainnet Capella hard fork. Submit as early as possible, or community members may start loading CLWP submissions into beacon nodes in advance.
+
 2023-01-21 - We are accepting CLWP submissions using ethdo version 1.27.0 or later. An offline-preparation.json file has been updated for Capella
 
 ### Mainnet
@@ -101,11 +109,20 @@ For community support, create an issue or join our OffChain Discord channel #eth
 We welcome every node operator to volunteer by loading CLWP submissions into their node in advance of the Capella hard fork on each chain. 
 
 ```
-jq -s 'add' /path/to/ConsensusLayerWithdrawalProtection/mainnet/*.json > change-operations.json
+# Navigate to the folder containing the "ethdo" utility
+cd /path/to/ethdoFolder
+
+# Download the CLWP submissions:
+git clone https://github.com/benjaminchodroff/ConsensusLayerWithdrawalProtection.git
+
+# Install jq (Example: apt install -y jq) and use it to combine all CLWP submissions together into a single change-operations.json file
+jq -s 'add' ConsensusLayerWithdrawalProtection/mainnet/*.json > change-operations.json
+
+# Run ethdo to connect to your beacon node (specify the valid host and port), allowing local insecure connections using HTTP, and it will broadcast all messages in the change-operations.json file.
 ./ethdo validator credentials set --connection http://YourNodeIP:5052 --allow-insecure-connections 
 echo $?
 ```
 
-If you see "0" with no error messages, then you have set the CLWP submissions to your node. You may also confirm in the logs for your beacon node. 
+If you see "0" with no error messages, then you have set the CLWP submissions to your node. You may also confirm in the logs for your beacon node to see the messages. 
 
 Please sign up to our mailing list on https://clwp.xyz to receive notice when we have more detailed instructions in March. There is no cost (you don't even need to stake), and there is no penalty even if an attacker "wins the race" against a CLWP submission. Your beacon chain client will simply ignore the local submission and use the on chain consensus. All CLWP submissions may be independently verified and, even if a submission in this repository was invalid, your local beacon chain client would refuse to process it without penalty. 
