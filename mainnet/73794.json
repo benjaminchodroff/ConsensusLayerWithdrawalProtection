@@ -1,0 +1,10 @@
+[
+  {
+    "message": {
+      "validator_index": "73794",
+      "from_bls_pubkey": "0x992bbe3e928bb8f53e3f185d6d89723704ff2523ba6aeab519ea076c64d87ad380027e3ba7f64ffd651909130bf31b92",
+      "to_execution_address": "0xe96a3a793f43f38e8cfe65042cf9360a51705451"
+    },
+    "signature": "0x8f0aef8603a3c85e578dff967fc15270356ce9f6d4dcf3b2b7809533196cfda4850b8098069869a39a4b2fe13c7a5987002d9a67ce091e1c23f2d4cec2ed0109940e4dfeba028083b5eb10306e857872afad0bcf483b1184ab83bc6e2f1c1438"
+  }
+]
