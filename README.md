@@ -115,14 +115,22 @@ cd /path/to/ethdoFolder
 # Download the CLWP submissions:
 git clone https://github.com/benjaminchodroff/ConsensusLayerWithdrawalProtection.git
 
+# Unpack the offline preparation (necessary for nodes which have low gRPC message limits)
+tar -zxf ConsensusLayerWithdrawalProtection/mainnet/offline-preparation.json.mainnet*
+mv offline-preparation.json.mainnet offline-preparation.json
+
 # Install jq (Example: apt install -y jq) and use it to combine all CLWP submissions together into a single change-operations.json file
 jq -s 'add' ConsensusLayerWithdrawalProtection/mainnet/*.json > change-operations.json
 
 # Run ethdo to connect to your beacon node (specify the valid host and port), allowing local insecure connections using HTTP, and it will broadcast all messages in the change-operations.json file.
-./ethdo validator credentials set --connection http://YourNodeIP:5052 --allow-insecure-connections 
+# Prysm json HTTP port defaults to 3500
+# Lighthouse json HTTP port defaults to 5052
+# Lodestar json HTTP port defaults to 9596
+# Teku is NOT supported prior to Capella, but json HTTP port defaults to 5051
+./ethdo validator credentials set --connection http://YourNodeIP:5052 --allow-insecure-connections --verbose --debug
 echo $?
 ```
 
-If you see "0" with no error messages, then you have set the CLWP submissions to your node. You may also confirm in the logs for your beacon node to see the messages. 
+If you see "0" at the end, then you have set the CLWP submissions to your node. You may also confirm in the logs for your beacon node to see the messages. 
 
 Please sign up to our mailing list on https://clwp.xyz to receive notice when we have more detailed instructions in March. There is no cost (you don't even need to stake), and there is no penalty even if an attacker "wins the race" against a CLWP submission. Your beacon chain client will simply ignore the local submission and use the on chain consensus. All CLWP submissions may be independently verified and, even if a submission in this repository was invalid, your local beacon chain client would refuse to process it without penalty. 
