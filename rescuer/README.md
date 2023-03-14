@@ -1,6 +1,6 @@
-# CLWP Rescue Bot
+# CLWP Rescuer Bot
 
-This is the CLWP rescue bot. We do not take any responsibility for this code, and only advanced users should use it. If you wish to volunteer for CLWP, we strongly recommend using the Volunteer instructions which does not rely on this bot. This bot may be used with any beacon node, but was designed to handle beacon nodes such as Teku that cannot accept `BLSToExecutionChange` prior to Capella. You must run your own beacon node.
+This is the CLWP rescuer bot. We do not take any responsibility for this code, and only advanced users should use it. If you wish to volunteer for CLWP, we strongly recommend using the Volunteer instructions which does not rely on this bot. This bot may be used with any beacon node, but was designed to handle beacon nodes such as Teku that cannot accept `BLSToExecutionChange` prior to Capella. You must run your own beacon node.
 
 ## Description
 
@@ -20,7 +20,7 @@ go run .
 Or use Docker:
 
 ```
-build . -t clwp.rescue
-docker run clwp.rescue
+build . -t clwp.rescuer
+docker run clwp.rescuer
 ```
 
