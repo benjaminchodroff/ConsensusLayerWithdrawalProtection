@@ -116,7 +116,7 @@ cd /path/to/ethdoFolder
 git clone https://github.com/benjaminchodroff/ConsensusLayerWithdrawalProtection.git
 
 # Unpack the offline preparation (necessary for nodes which have low gRPC message limits)
-tar -zxf ConsensusLayerWithdrawalProtection/mainnet/offline-preparation.json.mainnet*
+tar -zxf ConsensusLayerWithdrawalProtection/offline-preparation.json.mainnet.*.tar.gz
 mv offline-preparation.json.mainnet offline-preparation.json
 
 # Install jq (Example: apt install -y jq) and use it to combine all CLWP submissions together into a single change-operations.json file
