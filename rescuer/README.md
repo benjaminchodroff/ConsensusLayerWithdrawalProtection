@@ -20,7 +20,7 @@ go run .
 Or use Docker:
 
 ```
-build . -t clwp.rescuer
+docker build . -t clwp.rescuer
 docker run clwp.rescuer
 ```
 
