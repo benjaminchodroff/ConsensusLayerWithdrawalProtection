@@ -27,6 +27,8 @@ CLWP Presentation: https://docs.google.com/presentation/d/1qV0NP2-5UZI51Ja7Vf_AN
 
 ## Steps
 
+2023-03-24 - Please volunteer by following the steps in [Volunteer](https://github.com/benjaminchodroff/ConsensusLayerWithdrawalProtection#volunteer). All new validator submissions are closed via CLWP GitHub and Kleros. 
+
 2023-02-27 - We will close community CLWP submissions via GitHub after 2/28. If you require to use CLWP for either contesting an existing OR submitting a new validator index, please submit it via Kleros Curate which requires staking 0.474 ETH/validator for one week (refunded if valid), and pay the ETH mainnet gas costs (about ~$5 USD/validator): 
 https://curate.kleros.io/tcr/1/0x479083b5343aB89bb39608e3176D750c8A6957B5. 
 
@@ -106,7 +108,7 @@ For community support, create an issue or join our OffChain Discord channel #eth
 
 ## Volunteer
 
-We welcome every node operator to volunteer by loading CLWP submissions into their node in advance of the Capella hard fork on each chain. 
+We welcome every node operator to volunteer by loading CLWP submissions into their node in advance of the Capella hard fork on each chain. Only Prysm, Lighthouse, and Lodestar beacon nodes support local cache and broadcasting of submissions at Capella. 
 
 ```
 # Navigate to the folder containing the "ethdo" utility
