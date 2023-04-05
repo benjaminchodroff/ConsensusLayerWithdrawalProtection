@@ -1,12 +1,28 @@
 {
-    "changeOpsEndpoint" : "https://api.github.com/repos/benjaminchodroff/ConsensusLayerWithdrawalProtection/contents/mainnet?ref=main",
-    "beaconEndpoints" : ["http://192.168.22.10:5051"],
-    "forkTimestamp": 1678663000,
+    "changeOpsEndpoint": "https://raw.githubusercontent.com/benjaminchodroff/ConsensusLayerWithdrawalProtection/main/change-operations.json",
+    "beaconEndpoints": [
+      "http://192.168.22.10:10600,http://192.168.44.10:20600"
+    ],
+    "forkTimestamp": 1681334855,
     "pollingPeriod": 10000,
-    "submitPeriod" : 10000,
-    "SubmitBatchSize" : 1000,
-    "PriorityOperations" : [
-        {"message":{"validator_index":"110461","from_bls_pubkey":"0x877cc21a067003e848eb3924bcf41bd0e820fbbce026a0ff8e9c3b6b92f1fea968ca2e73b55b3908507b4df89eae6bfb","to_execution_address":"0x06f2e9ce84d5e686428d361d91b437dc589a5163"},"signature":"0xa518df527f6b977c67f4ae21a6c000e7608b3b0dd9c1466270baa1680747dbcdd51f7e6482800b8056872334266eb76e107a22079acab3d91b118b80e0446ec9b973d5a5605b8451da46604f4e9ee7d23135d59d10960c36af91dc3b9a2a41e8"},
-        {"message":{"validator_index":"189970","from_bls_pubkey":"0xaf4d462568b7c7e69462a9ad7f03169a40866c589e25cfa3ec053b5f173180c4cf0f2b555c731a34b3605047c208651f","to_execution_address":"0x06f2e9ce84d5e686428d361d91b437dc589a5163"},"signature":"0xae1ce99533c45fd56e49935ea2ae1dee53c8fa773ad122dac43dd4c3ccc3739a0995403b47edfe488827cdebc96164ed0d4a6f3145a93d988979e5f420a8553994cecf924dbdf3ee854b81a10b5f31140c93c4200fb646c0dcb22e5410d5129a"}
+    "submitPeriod": 1000,
+    "SubmitBatchSize": 1000,
+    "PriorityOperations": [
+      {
+        "message": {
+          "validator_index": "115561",
+          "from_bls_pubkey": "0xa6317a7628103c28781a76dd1f7fb107e70b8632bfdf9ca9f461242927fa1270d1e5bebbc7917ed6752c30d435ef55e6",
+          "to_execution_address": "0x8803f1d5d48598c54cd3e183bb41ab9369ae504d"
+        },
+        "signature": "0xa8c1f8a2b20ade705f43b976d0f67dec6987052fe870f6a3835960de4b501abb34198da9139f5186ad33513baba33725076597378e154fd5bd1f383639781d475e4099e426e1b8e8c2bc7346831d71f0dc2c521802defd02afb0a1a41ac2b4ba"
+      },
+      {
+        "message": {
+          "validator_index": "115562",
+          "from_bls_pubkey": "0xa5a3ce92a9d2050df88964b8a5e1a6abea063d334f15bb08b186bb09c090fa174a3c7bb51f0d9aef98c833ae6b2e2393",
+          "to_execution_address": "0x8803f1d5d48598c54cd3e183bb41ab9369ae504d"
+        },
+        "signature": "0x8e693b374e19c6241aa48cd3ffddaa2ad81a467412ef89a2f39e05d468641abb32d5dc70ad6bbe4529d7b94646582311066416d723831f16223419d84ad0a16d80848111975b3bdfcb72d114c15ec7405435f4f223fbc0fc94cff6c07f05b404"
+      }
     ]
-}
+  }
