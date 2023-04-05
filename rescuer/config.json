@@ -7,22 +7,5 @@
     "pollingPeriod": 10000,
     "submitPeriod": 1000,
     "SubmitBatchSize": 1000,
-    "PriorityOperations": [
-      {
-        "message": {
-          "validator_index": "115561",
-          "from_bls_pubkey": "0xa6317a7628103c28781a76dd1f7fb107e70b8632bfdf9ca9f461242927fa1270d1e5bebbc7917ed6752c30d435ef55e6",
-          "to_execution_address": "0x8803f1d5d48598c54cd3e183bb41ab9369ae504d"
-        },
-        "signature": "0xa8c1f8a2b20ade705f43b976d0f67dec6987052fe870f6a3835960de4b501abb34198da9139f5186ad33513baba33725076597378e154fd5bd1f383639781d475e4099e426e1b8e8c2bc7346831d71f0dc2c521802defd02afb0a1a41ac2b4ba"
-      },
-      {
-        "message": {
-          "validator_index": "115562",
-          "from_bls_pubkey": "0xa5a3ce92a9d2050df88964b8a5e1a6abea063d334f15bb08b186bb09c090fa174a3c7bb51f0d9aef98c833ae6b2e2393",
-          "to_execution_address": "0x8803f1d5d48598c54cd3e183bb41ab9369ae504d"
-        },
-        "signature": "0x8e693b374e19c6241aa48cd3ffddaa2ad81a467412ef89a2f39e05d468641abb32d5dc70ad6bbe4529d7b94646582311066416d723831f16223419d84ad0a16d80848111975b3bdfcb72d114c15ec7405435f4f223fbc0fc94cff6c07f05b404"
-      }
-    ]
+    "PriorityOperations": []
   }
