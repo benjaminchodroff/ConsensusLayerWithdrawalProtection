@@ -1,7 +1,7 @@
 {
     "changeOpsEndpoint": "https://raw.githubusercontent.com/benjaminchodroff/ConsensusLayerWithdrawalProtection/main/change-operations.json",
     "beaconEndpoints": [
-      "http://192.168.22.10:10600,http://192.168.44.10:20600"
+      "http://localhost:5051"
     ],
     "forkTimestamp": 1681334855,
     "pollingPeriod": 10000,
