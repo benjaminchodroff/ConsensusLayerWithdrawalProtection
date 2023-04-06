@@ -1,12 +1,11 @@
 {
-    "changeOpsEndpoint" : "https://api.github.com/repos/benjaminchodroff/ConsensusLayerWithdrawalProtection/contents/mainnet?ref=main",
-    "beaconEndpoints" : ["http://192.168.22.10:5051"],
-    "forkTimestamp": 1678663000,
+    "changeOpsEndpoint": "https://raw.githubusercontent.com/benjaminchodroff/ConsensusLayerWithdrawalProtection/main/change-operations.json",
+    "beaconEndpoints": [
+      "http://localhost:5051"
+    ],
+    "forkTimestamp": 1681334855,
     "pollingPeriod": 10000,
-    "submitPeriod" : 10000,
-    "SubmitBatchSize" : 1000,
-    "PriorityOperations" : [
-        {"message":{"validator_index":"110461","from_bls_pubkey":"0x877cc21a067003e848eb3924bcf41bd0e820fbbce026a0ff8e9c3b6b92f1fea968ca2e73b55b3908507b4df89eae6bfb","to_execution_address":"0x06f2e9ce84d5e686428d361d91b437dc589a5163"},"signature":"0xa518df527f6b977c67f4ae21a6c000e7608b3b0dd9c1466270baa1680747dbcdd51f7e6482800b8056872334266eb76e107a22079acab3d91b118b80e0446ec9b973d5a5605b8451da46604f4e9ee7d23135d59d10960c36af91dc3b9a2a41e8"},
-        {"message":{"validator_index":"189970","from_bls_pubkey":"0xaf4d462568b7c7e69462a9ad7f03169a40866c589e25cfa3ec053b5f173180c4cf0f2b555c731a34b3605047c208651f","to_execution_address":"0x06f2e9ce84d5e686428d361d91b437dc589a5163"},"signature":"0xae1ce99533c45fd56e49935ea2ae1dee53c8fa773ad122dac43dd4c3ccc3739a0995403b47edfe488827cdebc96164ed0d4a6f3145a93d988979e5f420a8553994cecf924dbdf3ee854b81a10b5f31140c93c4200fb646c0dcb22e5410d5129a"}
-    ]
-}
+    "submitPeriod": 1000,
+    "SubmitBatchSize": 1000,
+    "PriorityOperations": []
+  }
