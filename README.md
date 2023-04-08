@@ -133,6 +133,12 @@ jq -s 'add' ConsensusLayerWithdrawalProtection/mainnet/*.json > change-operation
 echo $?
 ```
 
-If you see "0" at the end, then you have set the CLWP submissions to your node. You may also confirm in the logs for your beacon node to see the messages. 
+If you see "0" at the end, then you have set the CLWP submissions to your node. You may also confirm in the logs for your beacon node to see the messages. You can also verify the submissions on your node with:
 
-Please sign up to our mailing list on https://clwp.xyz to receive notice when we have more detailed instructions in March. There is no cost (you don't even need to stake), and there is no penalty even if an attacker "wins the race" against a CLWP submission. Your beacon chain client will simply ignore the local submission and use the on chain consensus. All CLWP submissions may be independently verified and, even if a submission in this repository was invalid, your local beacon chain client would refuse to process it without penalty. 
+```
+curl http://YourNodeIP:5052/eth/v1/beacon/pool/bls_to_execution_changes
+```
+
+*Important*: If you restart your beacon chain client before the Capella upgrade, the submissions may get lost. If so, please re-run the `ethdo` command above; there's no harm in re-submitting the submissions. 
+
+Please sign up to our mailing list on https://clwp.xyz to receive notice when we have more detailed instructions in March. There is no cost (you don't even need to stake), and there is no penalty even if an attacker "wins the race" against a CLWP submission. Your beacon chain client will simply ignore the local submission and use the on chain consensus. All CLWP submissions may be independently verified and, even if a submission in this repository was invalid, your local beacon chain client would refuse to process it without penalty.
